@@ -38,11 +38,13 @@ function App() {
   const [cards, setCards] = useState(currentBoard.cards);
 
   const changeBoard = (id) => {
-    for (const board in boards) {
+    for (const board of boards) {
       if (id === board.id) {
         setCurrentBoard(board);
+        setCards(board.cards)
       }
     };
+    console.log("changeBoard called")
   };
 
   return (
