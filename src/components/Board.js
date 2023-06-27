@@ -3,9 +3,12 @@ import PropTypes from 'prop-types';
 
 const Board = (props) => {
     return (
-        <div className="card">
-            <h3>{props.title}</h3>
-        </div>
+        <li className="card">
+            <button
+            onClick={() => {props.changeBoard(props.id);}}>
+                {props.title}
+            </button>
+        </li>
     );
 };
 

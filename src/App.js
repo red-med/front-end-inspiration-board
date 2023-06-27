@@ -34,9 +34,16 @@ const CARDS = [{id: 1,
 
 function App() {
   const [boards, setBoards] = useState(BOARDS);
-  const [currentBoard, setCurrentBoard] = useState(BOARDS[0]["title"]);
-  const [cards, setCards] = useState(BOARDS[0]["cards"]);
+  const [currentBoard, setCurrentBoard] = useState(boards[0]);
+  const [cards, setCards] = useState(currentBoard.cards);
 
+  const changeBoard = (id) => {
+    for (const board in boards) {
+      if (id === board.id) {
+        setCurrentBoard(board);
+      }
+    };
+  };
 
   return (
     <div className="page">
@@ -47,11 +54,11 @@ function App() {
         <section className="board-view">
           <div>
             <h2>Boards</h2>
-            <BoardList boards={boards}/>
+            <BoardList boards={boards} changeBoard={changeBoard}/>
           </div>
           <div>
             <h2>Selected Board</h2>
-            <p>{currentBoard}</p>
+            <p>{currentBoard.title}</p>
           </div>
           <div>
             <h2>Create A New Board</h2>

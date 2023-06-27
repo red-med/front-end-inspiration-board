@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Board from './Board';
 
-const BoardList = ({ boards }) => {
+const BoardList = ({ boards, changeBoard }) => {
     const getBoardListJSX = (boards) => {
         return boards.map((board) => {
             return (
@@ -11,6 +11,7 @@ const BoardList = ({ boards }) => {
                     title={board.title}
                     owner={board.owner}
                     cards={board.cards}
+                    changeBoard={changeBoard}
                 />
             );
         });
@@ -33,7 +34,8 @@ BoardList.propTypes = {
                 })
             )
         })
-    )
+    ),
+    changeBoard: PropTypes.func.isRequired
 };
 
 export default BoardList;
