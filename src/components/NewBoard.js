@@ -1,5 +1,30 @@
 import { useState } from 'react';
 import Proptypes from 'prop-types';
+const BOARDS = [{id: 1,
+    title: "Board 1",
+    owner: "Kira",
+    cards: [{id: 1,
+            message: "Test message1",
+            likes_count: 3,
+            date_created: "1/1/23"},
+            {id: 2,
+            message: "Test message1-2",
+            likes_count: 9,
+            date_created: "1/1/23"}]},
+    {id: 2,
+    title: "Board 2",
+    owner: "Rediet",
+    cards: [{id: 1,
+            message: "Test message2",
+            likes_count: 5,
+            date_created: "1/1/23"}]}
+]
+
+const CARDS = [{id: 1,
+    message: "Test message",
+    likes_count: 3,
+    date_created: "1/1/23"}
+]
 
 const INITIAL_FORM_DATA = {
     id:"",

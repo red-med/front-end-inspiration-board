@@ -48,62 +48,7 @@ function App() {
     };
 
 
-  return (
-    <div className="page">
-      <div className="content">
-        <header className="App-header">
-          <h1>Inspiration Board</h1>
-        </header>
-        <section className="board-view">
-          <div>
-            <h2>Boards</h2>
-            <BoardList boards={boards} changeBoard={changeBoard}/>
-          </div>
-          <div>
-            <h2>Selected Board</h2>
-            <p>{currentBoard.title}</p>
-          </div>
-          <div>
-          <h2>Create A New Board</h2>
-            <form>
-              <div>
-              <label>Title</label>
-              </div>
-            <input type="text"
-              id="title" 
-              name="title" 
-              value={formData.title}
-              onChange={updatePreview}
-            />
-            <div>
-            <label>Owner's Name</label>
-            </div>
-            <input type="text" 
-              id="owner" 
-              name="owner" 
-              value={formData.owner}
-              onChange={updatePreview}
-            />
-            <p>Preview:</p>
-            <div id="preview">{formData.title} - {formData.owner}</div>
-            <input type="submit" value="Submit"/>
-            </form>
-            
-        
-          </div>
-        </section>
-        <section className="card-view">
-          <div>
-            <h2>Cards For Pick-Me-Up-Quotes</h2>
-            <CardList className="cardlist" cards={cards} increaseLikes={increaseLikes} deleteCard={deleteCard}/>
-          </div>
-          <div>
-            <h2>Create a New Card</h2>
-          </div>
-        </section>
-      </div>
-    </div>
-  );
+  return ();
 }
 
 
