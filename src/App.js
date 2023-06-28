@@ -5,45 +5,80 @@ import BoardList from "./components/BoardList.js"
 import CardList from "./components/CardList.js"
 import axios from "axios";
 
-
-const BOARDS = [{id: 1,
-                title: "Board 1",
-                owner: "Kira",
-                cards: [{id: 1,
-                        message: "Test message1",
-                        likes_count: 3,
-                        date_created: "1/1/23"},
-                        {id: 2,
-                          message: "Test message1-2",
-                          likes_count: 9,
-                          date_created: "1/1/23"}]},
-                {id: 2,
-                title: "Board 2",
-                owner: "Rediet",
-                cards: [{id: 1,
-                        message: "Test message2",
-                        likes_count: 5,
-                        date_created: "1/1/23"}]}
-              ]
-
-const CARDS = [{id: 1,
-                message: "Test message",
-                likes_count: 3,
-                date_created: "1/1/23"}
-              ]
+const BOARDS = [{id: 0, title: "", owner: ""}]
 
 function App() {
   const [boards, setBoards] = useState(BOARDS);
-  const [currentBoard, setCurrentBoard] = useState(boards[0]);
-  const [cards, setCards] = useState(currentBoard.cards);
+  const [currentBoard, setCurrentBoard] = useState(BOARDS[0]);
+  const [cards, setCards] = useState([]);
+
+  const API = "https://inspiration-board-api-bella-rediet-kira.onrender.com";
+
+  const getData = () => {
+    axios
+    .get(`${API}/boards`)
+    .then((result) => {
+      setBoards(result.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
 
   const changeBoard = (id) => {
     for (const board of boards) {
       if (id === board.id) {
         setCurrentBoard(board);
-        setCards(board.cards)
+        console.log("Board changed")
+
+        // axios
+        // .get(`${API}/cards`)
+        // .then((result) => {
+        //   const cardList = []
+        //   for (const card of result.data) {
+
+        //   }
+        // })
       }
     };
+
+    axios
+    .get(`${API}/cards`)
+    .then((result) => {
+      const cardList = []
+      for (const card of result.data) {
+        if (card.board_id === id) {
+          cardList.push(card)
+          console.log("Cards changed")
+        }
+      }
+      setCards(cardList);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  };
+
+  const deleteBoard = (id) => {
+    axios
+    .delete(`${API}/boards/${id}`)
+    .then((result) => {
+      const newBoards = [];
+      for (let board of boards){
+        if (board.id !== id) {
+          newBoards.push(board);
+        }
+      }
+      setBoards(newBoards);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   };
 
   const increaseLikes = (id) => {
@@ -51,6 +86,17 @@ function App() {
       if (card.id === id) {
         const updatedCard = { ...card };
         updatedCard.likes_count++;
+        
+        axios
+        .patch(`${API}/cards/${id}/likes_count`, { likes_count: updatedCard.likes_count})
+        .then ((result) => {
+          console.log(result.data);
+          getData();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+        
         return updatedCard;
       } else {
         return { ...card }
@@ -58,6 +104,23 @@ function App() {
     });
     setCards(newCards);
   };
+
+  const deleteCard = (id) => {
+    axios
+    .delete(`${API}/cards/${id}`)
+    .then((result) => {
+      const newCards = [];
+      for (let card of cards){
+        if (card.id !== id) {
+          newCards.push(card);
+        }
+      }
+      setCards(newCards);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
 
   return (
     <div className="page">
@@ -81,7 +144,7 @@ function App() {
         <section className="card-view">
           <div>
             <h2>Cards For Pick-Me-Up-Quotes</h2>
-            <CardList className="cardlist" cards={cards} increaseLikes={increaseLikes}/>
+            <CardList className="cardlist" cards={cards} increaseLikes={increaseLikes} deleteCard={deleteCard}/>
           </div>
           <div>
             <h2>Create a New Card</h2>
