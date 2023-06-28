@@ -40,15 +40,6 @@ function App() {
       if (id === board.id) {
         setCurrentBoard(board);
         console.log("Board changed")
-
-        // axios
-        // .get(`${API}/cards`)
-        // .then((result) => {
-        //   const cardList = []
-        //   for (const card of result.data) {
-
-        //   }
-        // })
       }
     };
 
