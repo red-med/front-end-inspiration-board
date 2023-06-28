@@ -31,11 +31,16 @@ const CARDS = [{id: 1,
                 likes_count: 3,
                 date_created: "1/1/23"}
               ]
+const INITIAL_FORM_DATA = {
+  title: "",
+  owner:""
+}
 
 function App() {
   const [boards, setBoards] = useState(BOARDS);
   const [currentBoard, setCurrentBoard] = useState(boards[0]);
   const [cards, setCards] = useState(currentBoard.cards);
+  const [formData, setFormData] = useState(INITIAL_FORM_DATA);
 
   const changeBoard = (id) => {
     for (const board of boards) {
@@ -59,6 +64,15 @@ function App() {
     setCards(newCards);
   };
 
+  const updatePreview = (evt) => {
+    const newFormData = {
+      ...formData,
+      [evt.target.name]: evt.target.value
+    };
+
+    setFormData(newFormData);
+  }
+
   return (
     <div className="page">
       <div className="content">
@@ -75,7 +89,32 @@ function App() {
             <p>{currentBoard.title}</p>
           </div>
           <div>
-            <h2>Create A New Board</h2>
+          <h2>Create A New Board</h2>
+            <form>
+              <div>
+              <label>Title</label>
+              </div>
+            <input type="text"
+              id="title" 
+              name="title" 
+              value={formData.title}
+              onChange={updatePreview}
+            />
+            <div>
+            <label>Owner's Name</label>
+            </div>
+            <input type="text" 
+              id="owner" 
+              name="owner" 
+              value={formData.owner}
+              onChange={updatePreview}
+            />
+            <p>Preview:</p>
+            <div id="preview">{formData.title} - {formData.owner}</div>
+            <input type="submit" value="Submit"/>
+            </form>
+            
+        
           </div>
         </section>
         <section className="card-view">
