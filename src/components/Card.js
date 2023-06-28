@@ -7,6 +7,7 @@ const Card = (props) => {
             <h3>{props.message}</h3>
             <p>{props.likes_count}</p>
             <button onClick={() => {props.increaseLikes(props.id)}}>+1</button>
+            <button onClick={() => {props.deleteCard(props.id)}}>Delete</button>
 
         </div>
     );
@@ -17,7 +18,9 @@ Card.propTypes = {
     message: PropTypes.string.isRequired,
     likes_count: PropTypes.number.isRequired,
     date_created: PropTypes.string.isRequired,
-    increaseLikes: PropTypes.func.isRequired
+    board_id: PropTypes.number.isRequired,
+    increaseLikes: PropTypes.func.isRequired,
+    deleteCard: PropTypes.func.isRequired
 };
 
 export default Card;

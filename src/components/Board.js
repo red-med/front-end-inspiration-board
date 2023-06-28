@@ -16,14 +16,6 @@ Board.propTypes = {
     id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     owner: PropTypes.string.isRequired,
-    cards: PropTypes.arrayOf (
-        PropTypes.shape({
-            id: PropTypes.number.isRequired,
-            message: PropTypes.string.isRequired,
-            likes_count: PropTypes.number.isRequired,
-            date_created: PropTypes.string.isRequired
-        })
-    )
 }
 
 export default Board;
