@@ -44,7 +44,19 @@ function App() {
         setCards(board.cards)
       }
     };
-    console.log("changeBoard called")
+  };
+
+  const increaseLikes = (id) => {
+    const newCards = cards.map((card) => {
+      if (card.id === id) {
+        const updatedCard = { ...card };
+        updatedCard.likes_count++;
+        return updatedCard;
+      } else {
+        return { ...card }
+      }
+    });
+    setCards(newCards);
   };
 
   return (
@@ -69,7 +81,7 @@ function App() {
         <section className="card-view">
           <div>
             <h2>Cards For Pick-Me-Up-Quotes</h2>
-            <CardList className="cardlist" cards={cards}/>
+            <CardList className="cardlist" cards={cards} increaseLikes={increaseLikes}/>
           </div>
           <div>
             <h2>Create a New Card</h2>

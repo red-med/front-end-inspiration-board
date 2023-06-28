@@ -5,6 +5,9 @@ const Card = (props) => {
     return (
         <div className="card">
             <h3>{props.message}</h3>
+            <p>{props.likes_count}</p>
+            <button onClick={() => {props.increaseLikes(props.id)}}>+1</button>
+
         </div>
     );
 };
@@ -13,7 +16,8 @@ Card.propTypes = {
     id: PropTypes.number.isRequired,
     message: PropTypes.string.isRequired,
     likes_count: PropTypes.number.isRequired,
-    date_created: PropTypes.string.isRequired
+    date_created: PropTypes.string.isRequired,
+    increaseLikes: PropTypes.func.isRequired
 };
 
 export default Card;
