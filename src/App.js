@@ -43,6 +43,7 @@ function App() {
   const [currentBoard, setCurrentBoard] = useState(BOARDS[0]);
   const [cards, setCards] = useState([]);
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
+  const [isBoardSelected, setIsBoardSelected] = useState(false);
 
   const API = "https://inspiration-board-api-bella-rediet-kira.onrender.com";
 
@@ -79,6 +80,7 @@ function App() {
     for (const board of boards) {
       if (id === board.board_id) {
         setCurrentBoard(board);
+        setIsBoardSelected(true);
         console.log("Board changed")
       }
     };
@@ -164,29 +166,33 @@ function App() {
     <div className="page">
       <div className="content">
         <header className="App-header">
-          <h1>Inspiration Board</h1>
+          <h1>INSPIRATION BOARD</h1>
         </header>
         <section className="board-view">
           <div>
-            <h2>Boards</h2>
+            <h2>BOARDS</h2>
             <BoardList boards={boards} changeBoard={changeBoard}/>
           </div>
           <div>
-            <h2>Selected Board</h2>
+            <h2>SELECTED BOARD</h2>
             <p>{currentBoard.title} - {currentBoard.owner}</p>
           </div>
           <div>
-          <h2>Create A New Board</h2> 
+          <h2>CREATE A NEW BOARD</h2> 
           <NewBoardForm addBoard={postBoard} />       
           </div>
         </section>
         <section className="card-view">
           <div>
-            <h2>Cards For Pick-Me-Up-Quotes</h2>
+            {isBoardSelected && ( 
+              <h2>CARDS FOR {currentBoard.title.toUpperCase()}</h2>
+            )}
             <CardList className="cardlist" cards={cards} increaseLikes={increaseLikes} deleteCard={deleteCard}/>
           </div>
           <div>
-            <h2>Create a New Card</h2>
+            {isBoardSelected && ( 
+              <h2>CREATE A NEW CARD</h2>
+            )}
           </div>
         </section>
       </div>

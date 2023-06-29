@@ -12,8 +12,7 @@ const INITIAL_FORM_DATA = {
 const NewBoardForm = ({ addBoard }) => {
     const [formData, setFormData] = useState(INITIAL_FORM_DATA);
     const [showForm, setShowForm] = useState(true);
-    const [cards, setCards] = useState([]);
-
+    
     const updatePreview = (evt) => {
         const newFormData = {
         ...formData,
@@ -25,29 +24,10 @@ const NewBoardForm = ({ addBoard }) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log("we're in handleSubmit");
-        console.log(event)
-        console.log(formData)
-        // const newId = BOARDS[BOARDS.length - 1].id
-        // const newFormData = {
-        // ...formData, id: newId
-        // }
-        // BOARDS.push(newFormData);
         addBoard(formData);
 
         setFormData(INITIAL_FORM_DATA);
     }
-    const increaseLikes = (id) => {
-        const newCards = cards.map((card) => {
-        if (card.id === id) {
-            const updatedCard = { ...card };
-            updatedCard.likes_count++;
-            return updatedCard;
-        } else {
-            return { ...card }
-        }
-        });
-        setCards(newCards);
-    };
     
     const toggleForm = () => {
         setShowForm((prevState) => !prevState);

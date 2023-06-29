@@ -2,7 +2,7 @@
 h1, h2 {
 color: black;
 display: inline-block;
-font-family: "Permanent Marker, cursive";
+font-family:'Permanent Marker', cursive;
 padding: 0.6em 1em;
 }
 
