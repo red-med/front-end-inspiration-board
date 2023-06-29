@@ -7,8 +7,8 @@ const CardList = ({ cards, increaseLikes, deleteCard }) => {
         return cards.map((card) => {
             return (
                 <Card
-                    key={card.id}
-                    id={card.id}
+                    key={card.card_id}
+                    id={card.card_id}
                     message={card.message}
                     likes_count={card.likes_count}
                     date_created={card.date_created}
@@ -25,11 +25,11 @@ const CardList = ({ cards, increaseLikes, deleteCard }) => {
 CardList.propTypes = {
     cards: PropTypes.arrayOf(
         PropTypes.shape({
-            id: PropTypes.number.isRequired,
+            card_id: PropTypes.number.isRequired,
             message: PropTypes.string.isRequired,
             likes_count: PropTypes.number.isRequired,
             date_created: PropTypes.string.isRequired,
-            board_id: PropTypes.number.isRequired,
+            board_id: PropTypes.number.isRequired
         })
     ),
     increaseLikes: PropTypes.func.isRequired,

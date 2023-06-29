@@ -76,7 +76,7 @@ function App() {
 
   const postCard = (newCardData) => {
     axios
-      .post(`${API}/boards/${currentBoard.id}/cards`, newCardData)
+      .post(`${API}/boards/${currentBoard.board_id}/cards`, newCardData)
       .then((result) => {
         console.log(result.data);
         getData();
