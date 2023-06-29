@@ -5,8 +5,10 @@ import BoardList from "./components/BoardList.js"
 import CardList from "./components/CardList.js"
 import axios from "axios";
 import NewBoardForm from './components/NewBoard';
+import NewCardForm from './components/NewCard';
 
 const BOARDS = [{id: 0, title: "", owner: ""}]
+const CARDS = [{id:0, message: "", likes_count: 0, date_created:"01/01/2001"}]
 // const BOARDS = [{id: 1,
 //     title: "Board 1",
 //     owner: "Kira",
@@ -32,27 +34,38 @@ const BOARDS = [{id: 0, title: "", owner: ""}]
 //     likes_count: 3,
 //     date_created: "1/1/23"}
 // ]
-const INITIAL_FORM_DATA = {
-  id:0,
-  title: "",
-  owner:""
-}
+
 
 function App() {
   const [boards, setBoards] = useState(BOARDS);
   const [currentBoard, setCurrentBoard] = useState(BOARDS[0]);
+  const [currentCard, setCurrentCard] = useState({});
   const [cards, setCards] = useState([]);
-  const [formData, setFormData] = useState(INITIAL_FORM_DATA);
   const [isBoardSelected, setIsBoardSelected] = useState(false);
 
   const API = "https://inspiration-board-api-bella-rediet-kira.onrender.com";
 
-  const getData = () => {
+  const getData = (newCardData) => {
     axios
     .get(`${API}/boards`)
     .then((result) => {
       setBoards(result.data);
-    })
+      if (currentBoard.id) {
+        newCardData.board_id = currentBoard.id;
+        axios
+          .get(`${API}/boards/${currentBoard.id}/cards`)
+          .then((result) => {
+            const cardList = result.data.filter(
+              (card) => card.board_id === currentBoard.id
+            );
+            setCards(cardList);
+            console.log("cardList:", cardList); 
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+    };
+  })
     .catch((err) => {
       console.log(err);
     });
@@ -75,31 +88,68 @@ function App() {
         console.log(err);
       });
   };
-
+  const postCard = (newCardData) => {
+    console.log("we made to postcard");
+    console.log(newCardData);
+    if (currentBoard.id) {
+      newCardData.board_id = currentBoard.id;
+    axios
+      .post(`${API}/boards/${currentBoard.id}/cards`, newCardData)
+      .then((result) => {
+        console.log(result.data);
+        // fetchCardsForBoard(currentBoard.id);
+        getData();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    } else {
+      console.log("No board is currently selected.");
+    }
+  };
+  // const fetchCardsForBoard = (boardId) => {
+  //   axios
+  //     .get(`${API}/boards/${boardId}/cards`)
+  //     .then((result) => {
+  //       setCards(result.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
   const changeBoard = (id) => {
     for (const board of boards) {
       if (id === board.board_id) {
         setCurrentBoard(board);
         setIsBoardSelected(true);
         console.log("Board changed")
+        // fetchCardsForBoard(id); // Fetch the cards for the selected board
+        // break; // Exit the loop after finding the matching board
       }
     };
 
     axios
-    .get(`${API}/cards`)
+    .get(`${API}/boards/${id}/cards`)
     .then((result) => {
-      const cardList = []
-      for (const card of result.data) {
-        if (card.board_id === id) {
-          cardList.push(card)
+      // const cardList = []
+      // for (const card of result.data) {
+      //   if (card.board_id === id) {
+      //     cardList.push(card)
+      if (Array.isArray(result.data)) {
+          const cardList = result.data.filter((card) => card.board_id === id);
+          setCards(cardList);
           console.log("Cards changed")
-        }
-      }
-      setCards(cardList);
+        // }
+      // }
+      // setCards(cardList);
+    } else {
+      console.log("Invalid response data format");
+    }
     })
     .catch((err) => {
       console.log(err);
     });
+    
   };
 
   const deleteBoard = (id) => {
@@ -187,12 +237,14 @@ function App() {
             {isBoardSelected && ( 
               <h2>CARDS FOR {currentBoard.title.toUpperCase()}</h2>
             )}
+            <p>{currentCard.message} </p>
             <CardList className="cardlist" cards={cards} increaseLikes={increaseLikes} deleteCard={deleteCard}/>
           </div>
           <div>
-            {isBoardSelected && ( 
-              <h2>CREATE A NEW CARD</h2>
-            )}
+              {isBoardSelected && ( 
+                <div><h2>CREATE A NEW CARD</h2>
+                <NewCardForm addCard={postCard} /> </div>
+              )}
           </div>
         </section>
       </div>
