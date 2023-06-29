@@ -7,7 +7,7 @@ import axios from "axios";
 import NewBoardForm from './components/NewBoard';
 import NewCardForm from './components/NewCard';
 
-const BOARDS = [{id: 0, title: "", owner: ""}]
+const BOARDS = [{board_id: 0, title: "", owner: ""}]
 const CARDS = [{id:0, message: "", likes_count: 0, date_created:"01/01/2001"}]
 // const BOARDS = [{id: 1,
 //     title: "Board 1",
@@ -50,20 +50,7 @@ function App() {
     .get(`${API}/boards`)
     .then((result) => {
       setBoards(result.data);
-      axios
-        .get(`${API}/boards/${currentBoard.id}/cards`)
-        .then((result) => {
-          // const cardList = result.data.filter(
-          //   (card) => card.board_id === currentBoard.id
-          // );
-          setCards(result["cards"]);
-          console.log("Got Cards"); 
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-    
-  })
+    })
     .catch((err) => {
       console.log(err);
     });
@@ -107,28 +94,15 @@ function App() {
         console.log("Board changed")
       }
     };
-
     axios
     .get(`${API}/boards/${id}/cards`)
     .then((result) => {
-      // const cardList = []
-      // for (const card of result.data) {
-      //   if (card.board_id === id) {
-      //     cardList.push(card)
-      if (Array.isArray(result.data)) {
-          const cardList = result.data.filter((card) => card.board_id === id);
-          setCards(cardList);
-          console.log("Cards changed")
-        // }
-      // }
-      // setCards(cardList);
-    } else {
-      console.log("Invalid response data format");
-    }
+      setCards(result["data"]["cards"]);
+      console.log("Got Cards"); 
     })
     .catch((err) => {
       console.log(err);
-    });
+    })
     
   };
 
