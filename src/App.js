@@ -51,6 +51,15 @@ function App() {
     .then((result) => {
       setBoards(result.data);
     })
+    .then(()  => {
+      axios
+      .get(`${API}/boards/${currentBoard.board_id}/cards`)
+      .then((result) => {
+        setCards(result["data"]["cards"]);
+        console.log("Got Cards"); 
+      })
+    }
+    )
     .catch((err) => {
       console.log(err);
     });
@@ -119,7 +128,7 @@ function App() {
 
   const increaseLikes = (id) => {
     const newCards = cards.map((card) => {
-      if (card.id === id) {
+      if (card.card_id === id) {
         const updatedCard = { ...card };
         updatedCard.likes_count++;
         
@@ -148,7 +157,7 @@ function App() {
     .then((result) => {
       const newCards = [];
       for (let card of cards){
-        if (card.id !== id) {
+        if (card.card_id !== id) {
           newCards.push(card);
         }
       }
