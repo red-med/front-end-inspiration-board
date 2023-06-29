@@ -7,9 +7,33 @@ import axios from "axios";
 import NewBoardForm from './components/NewBoard';
 
 const BOARDS = [{id: 0, title: "", owner: ""}]
+// const BOARDS = [{id: 1,
+//     title: "Board 1",
+//     owner: "Kira",
+//     cards: [{id: 1,
+//             message: "Test message1",
+//             likes_count: 3,
+//             date_created: "1/1/23"},
+//             {id: 2,
+//             message: "Test message1-2",
+//             likes_count: 9,
+//             date_created: "1/1/23"}]},
+//     {id: 2,
+//     title: "Board 2",
+//     owner: "Rediet",
+//     cards: [{id: 1,
+//             message: "Test message2",
+//             likes_count: 5,
+//             date_created: "1/1/23"}]}
+// ]
 
+// const CARDS = [{id: 1,
+//     message: "Test message",
+//     likes_count: 3,
+//     date_created: "1/1/23"}
+// ]
 const INITIAL_FORM_DATA = {
-  id:"",
+  id:0,
   title: "",
   owner:""
 }
@@ -38,8 +62,10 @@ function App() {
   }, []);
 
   const postBoard = (newBoardData) => {
+    console.log("we made to postboard");
+    console.log(newBoardData);
     axios
-      .post(API, newBoardData)
+      .post(`${API}/boards`, newBoardData)
       .then((result) => {
         console.log(result.data);
         getData();
@@ -51,7 +77,7 @@ function App() {
 
   const changeBoard = (id) => {
     for (const board of boards) {
-      if (id === board.id) {
+      if (id === board.board_id) {
         setCurrentBoard(board);
         console.log("Board changed")
       }
@@ -80,7 +106,7 @@ function App() {
     .then((result) => {
       const newBoards = [];
       for (let board of boards){
-        if (board.id !== id) {
+        if (board.board_id !== id) {
           newBoards.push(board);
         }
       }
@@ -147,7 +173,7 @@ function App() {
           </div>
           <div>
             <h2>Selected Board</h2>
-            <p>{currentBoard.title}</p>
+            <p>{currentBoard.title} - {currentBoard.owner}</p>
           </div>
           <div>
           <h2>Create A New Board</h2> 
