@@ -30,7 +30,7 @@ const NewCardForm = ({ addCard }) => {
     }
 
     return (
-        <section>
+        <section className="card-form">
             <form onSubmit={handleSubmit}>
                     <div>
                     <label>Message</label>

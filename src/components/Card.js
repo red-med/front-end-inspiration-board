@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const Card = (props) => {
     return (
-        <div className="card">
+        <div className="card-item">
             <h3>{props.message}</h3>
             <p>{props.likes_count}</p>
             <button onClick={() => {props.increaseLikes(props.id)}}>+1</button>

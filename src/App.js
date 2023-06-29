@@ -43,28 +43,26 @@ function App() {
   const [cards, setCards] = useState([]);
   const [isBoardSelected, setIsBoardSelected] = useState(false);
 
-  const API = "https://inspiration-board-api-bella-rediet-kira.onrender.com";
+  const API = "http://127.0.0.1:5000";
 
   const getData = (newCardData) => {
     axios
     .get(`${API}/boards`)
     .then((result) => {
       setBoards(result.data);
-      if (currentBoard.id) {
-        newCardData.board_id = currentBoard.id;
-        axios
-          .get(`${API}/boards/${currentBoard.id}/cards`)
-          .then((result) => {
-            const cardList = result.data.filter(
-              (card) => card.board_id === currentBoard.id
-            );
-            setCards(cardList);
-            console.log("cardList:", cardList); 
-          })
-          .catch((err) => {
-            console.log(err);
-          })
-    };
+      axios
+        .get(`${API}/boards/${currentBoard.id}/cards`)
+        .then((result) => {
+          // const cardList = result.data.filter(
+          //   (card) => card.board_id === currentBoard.id
+          // );
+          setCards(result["cards"]);
+          console.log("Got Cards"); 
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    
   })
     .catch((err) => {
       console.log(err);
@@ -88,43 +86,25 @@ function App() {
         console.log(err);
       });
   };
+
   const postCard = (newCardData) => {
-    console.log("we made to postcard");
-    console.log(newCardData);
-    if (currentBoard.id) {
-      newCardData.board_id = currentBoard.id;
     axios
       .post(`${API}/boards/${currentBoard.id}/cards`, newCardData)
       .then((result) => {
         console.log(result.data);
-        // fetchCardsForBoard(currentBoard.id);
         getData();
       })
       .catch((err) => {
         console.log(err);
       });
-    } else {
-      console.log("No board is currently selected.");
-    }
   };
-  // const fetchCardsForBoard = (boardId) => {
-  //   axios
-  //     .get(`${API}/boards/${boardId}/cards`)
-  //     .then((result) => {
-  //       setCards(result.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
+
   const changeBoard = (id) => {
     for (const board of boards) {
       if (id === board.board_id) {
         setCurrentBoard(board);
         setIsBoardSelected(true);
         console.log("Board changed")
-        // fetchCardsForBoard(id); // Fetch the cards for the selected board
-        // break; // Exit the loop after finding the matching board
       }
     };
 
@@ -156,13 +136,7 @@ function App() {
     axios
     .delete(`${API}/boards/${id}`)
     .then((result) => {
-      const newBoards = [];
-      for (let board of boards){
-        if (board.board_id !== id) {
-          newBoards.push(board);
-        }
-      }
-      setBoards(newBoards);
+      getData();
     })
     .catch((err) => {
       console.log(err);
@@ -176,7 +150,7 @@ function App() {
         updatedCard.likes_count++;
         
         axios
-        .patch(`${API}/cards/${id}/likes_count`, { likes_count: updatedCard.likes_count})
+        .patch(`${API}/cards/${id}/likes_count`, {likes_count: updatedCard.likes_count})
         .then ((result) => {
           console.log(result.data);
           getData();
@@ -186,6 +160,7 @@ function App() {
         });
         
         return updatedCard;
+
       } else {
         return { ...card }
       }
@@ -226,6 +201,7 @@ function App() {
           <div>
             <h2>SELECTED BOARD</h2>
             <p>{currentBoard.title} - {currentBoard.owner}</p>
+            <button onClick={() => {deleteBoard(currentBoard.id)}}>Delete board</button>
           </div>
           <div>
           <h2>CREATE A NEW BOARD</h2> 

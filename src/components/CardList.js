@@ -19,7 +19,7 @@ const CardList = ({ cards, increaseLikes, deleteCard }) => {
             );
         });
     };
-    return <ul className="board-list">{getBoardListJSX(cards)}</ul>;
+    return <ul className="card-list">{getBoardListJSX(cards)}</ul>;
 };
 
 CardList.propTypes = {

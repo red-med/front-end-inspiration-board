@@ -16,7 +16,7 @@ const BoardList = ({ boards, changeBoard }) => {
             );
         });
     };
-    return <ul className="board-list">{getBoardListJSX(boards)}</ul>;
+    return <ol className="board-list">{getBoardListJSX(boards)}</ol>;
 };
 
 BoardList.propTypes = {
