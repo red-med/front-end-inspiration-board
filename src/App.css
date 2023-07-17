@@ -99,3 +99,13 @@ button {
   margin: 10px;
 }
 
+.card-info {
+  display: flex;
+  gap: 10px;
+  font-size: 20px;
+}
+
+#card-info-button {
+  background-color: transparent;
+  border-color: transparent;
+}

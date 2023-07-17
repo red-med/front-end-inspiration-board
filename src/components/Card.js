@@ -5,10 +5,11 @@ const Card = (props) => {
     return (
         <div className="card-item">
             <h3>{props.message}</h3>
-            <p>{props.likes_count}</p>
-            <button onClick={() => {props.increaseLikes(props.id)}}>+1</button>
-            <button onClick={() => {props.deleteCard(props.id)}}>Delete</button>
-
+            <div className="card-info">
+                <p>{props.likes_count} 💕</p>
+                <button id="card-info-button" onClick={() => {props.increaseLikes(props.id)}}>+1</button>
+                <button id="card-info-button" onClick={() => {props.deleteCard(props.id)}}>Delete</button>
+            </div>
         </div>
     );
 };

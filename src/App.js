@@ -9,32 +9,6 @@ import NewCardForm from './components/NewCard';
 
 const BOARDS = [{board_id: 0, title: "", owner: ""}]
 const CARDS = [{id:0, message: "", likes_count: 0, date_created:"01/01/2001"}]
-// const BOARDS = [{id: 1,
-//     title: "Board 1",
-//     owner: "Kira",
-//     cards: [{id: 1,
-//             message: "Test message1",
-//             likes_count: 3,
-//             date_created: "1/1/23"},
-//             {id: 2,
-//             message: "Test message1-2",
-//             likes_count: 9,
-//             date_created: "1/1/23"}]},
-//     {id: 2,
-//     title: "Board 2",
-//     owner: "Rediet",
-//     cards: [{id: 1,
-//             message: "Test message2",
-//             likes_count: 5,
-//             date_created: "1/1/23"}]}
-// ]
-
-// const CARDS = [{id: 1,
-//     message: "Test message",
-//     likes_count: 3,
-//     date_created: "1/1/23"}
-// ]
-
 
 function App() {
   const [boards, setBoards] = useState(BOARDS);
@@ -43,7 +17,7 @@ function App() {
   const [cards, setCards] = useState([]);
   const [isBoardSelected, setIsBoardSelected] = useState(false);
 
-  const API = "http://127.0.0.1:5000";
+  const API = "https://inspiration-board-api-bella-rediet-kira.onrender.com";
 
   const getData = (newCardData) => {
     axios
@@ -166,8 +140,19 @@ function App() {
     .catch((err) => {
       console.log(err);
     });
-  }
+  };
 
+  const getSortedCards = (param) => {
+    axios
+    .get(`${API}/boards/${currentBoard.id}/cards?sort=${param}`)
+    .then((result) => {
+      setCards(result["data"]["cards"]);
+      console.log("Got Cards"); 
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
 
 
   return (
@@ -195,6 +180,14 @@ function App() {
           <div>
             {isBoardSelected && ( 
               <h2>CARDS FOR {currentBoard.title.toUpperCase()}</h2>
+            )}
+            {isBoardSelected && (
+              <select>
+                <option value=""></option>
+                <option value="by_id" onChange={getSortedCards("by_id")}>Sort by id</option>
+                <option value="alpha" onChange={getSortedCards("alpha")}>Sort alphabetically</option>
+                <option value="likes" onChange={getSortedCards("likes")}>Sort by likes</option>
+              </select>
             )}
             <p>{currentCard.message} </p>
             <CardList className="cardlist" cards={cards} increaseLikes={increaseLikes} deleteCard={deleteCard}/>
