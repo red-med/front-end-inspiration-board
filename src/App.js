@@ -172,7 +172,7 @@ function App() {
               <h2>CARDS FOR {currentBoard.title.toUpperCase()}</h2>
             )}
             {isBoardSelected && (
-              <select onChange={event => {getData(event.target.value)}}>
+              <select className="drop-down" onChange={event => {getData(event.target.value)}}>
                 <option value="?sort=by_id">Sort by id</option>
                 <option value="?sort=alpha">Sort alphabetically</option>
                 <option value="?sort=likes">Sort by likes</option>

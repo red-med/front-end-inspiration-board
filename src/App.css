@@ -114,3 +114,15 @@ button {
   background-color: transparent;
   border-color: transparent;
 }
+
+.drop-down {
+  margin: 20px;
+}
+
+.submit-button {
+  background-color: #fff;
+  border: 2px solid #000;
+  padding: 0.5em;
+  margin: 10px 0px 10px 0px;
+  box-sizing: initial;
+}

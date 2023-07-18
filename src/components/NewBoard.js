@@ -57,7 +57,7 @@ const NewBoardForm = ({ addBoard }) => {
                         />
                     <p>Preview:</p>
                     <div id="preview">{formData.title} - {formData.owner}</div>
-                    <input type="submit" value="Submit" onClick={handleSubmit}/>
+                    <input className="submit-button" type="submit" value="Submit" onClick={handleSubmit}/>
                 </form>
             </div>  : <div></div>}
         <div>
