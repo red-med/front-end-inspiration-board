@@ -17,7 +17,7 @@ function App() {
   const [cards, setCards] = useState([]);
   const [isBoardSelected, setIsBoardSelected] = useState(false);
 
-  const API = "https://inspiration-board-api-bella-rediet-kira.onrender.com";
+  const API = "https://inspiration-board-backend-5puf.onrender.com/";
 
   const getData = (newCardData) => {
     axios
