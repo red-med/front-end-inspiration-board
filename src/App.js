@@ -11,9 +11,9 @@ const BOARDS = [{board_id: 0, title: "", owner: ""}]
 const CARDS = [{id:0, message: "", likes_count: 0, date_created:"01/01/2001"}]
 
 function App() {
-  const [boards, setBoards] = useState(BOARDS);
-  const [currentBoard, setCurrentBoard] = useState(BOARDS[0]);
-  const [currentCard, setCurrentCard] = useState({});
+  const [boards, setBoards] = useState([]);
+  const [currentBoard, setCurrentBoard] = useState(null);
+  const [currentCard, setCurrentCard] = useState(null);
   const [cards, setCards] = useState([]);
   const [isBoardSelected, setIsBoardSelected] = useState(false);
 
@@ -154,11 +154,13 @@ function App() {
             <h2>BOARDS</h2>
             <BoardList boards={boards} changeBoard={changeBoard}/>
           </div>
-          <div>
-            <h2>SELECTED BOARD</h2>
-            <p>{currentBoard.title} - {currentBoard.owner}</p>
-            <button onClick={() => {deleteBoard(currentBoard.id)}}>Delete board</button>
-          </div>
+          { currentBoard &&
+            <div>
+              <h2>SELECTED BOARD</h2>
+              <p>{currentBoard.title} - {currentBoard.owner}</p>
+              <button onClick={() => {deleteBoard(currentBoard.id)}}>Delete board</button>
+            </div>
+          }
           <div>
           <h2>CREATE A NEW BOARD</h2> 
           <NewBoardForm addBoard={postBoard} />       
@@ -176,7 +178,9 @@ function App() {
                 <option value="?sort=likes">Sort by likes</option>
               </select>
             )}
-            <p>{currentCard.message} </p>
+            {currentCard && 
+              <p>{currentCard.message} </p>
+            }
             <CardList className="cardlist" cards={cards} increaseLikes={increaseLikes} deleteCard={deleteCard}/>
           </div>
           <div>
