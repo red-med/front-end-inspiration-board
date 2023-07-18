@@ -19,7 +19,7 @@ function App() {
 
   const API = "https://inspiration-board-backend-5puf.onrender.com/";
 
-  const getData = (param="") => {
+  const getData = (param="by_id") => {
     axios
     .get(`${API}/boards`)
     .then((result) => {

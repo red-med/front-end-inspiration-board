@@ -85,6 +85,11 @@ button {
   width: 100%;
 }
 
+.card-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .card-item {
   align-items: center;
   background-color: #fff8a5;
