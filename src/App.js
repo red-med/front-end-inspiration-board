@@ -19,7 +19,7 @@ function App() {
 
   const API = "https://inspiration-board-backend-5puf.onrender.com/";
 
-  const getData = (newCardData) => {
+  const getData = (param="") => {
     axios
     .get(`${API}/boards`)
     .then((result) => {
@@ -27,7 +27,7 @@ function App() {
     })
     .then(()  => {
       axios
-      .get(`${API}/boards/${currentBoard.board_id}/cards`)
+      .get(`${API}/boards/${currentBoard.board_id}/cards?sort=${param}`)
       .then((result) => {
         setCards(result["data"]["cards"]);
         console.log("Got Cards"); 
@@ -142,18 +142,6 @@ function App() {
     });
   };
 
-  const getSortedCards = (param) => {
-    axios
-    .get(`${API}/boards/${currentBoard.id}/cards?sort=${param}`)
-    .then((result) => {
-      setCards(result["data"]["cards"]);
-      console.log("Got Cards"); 
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-  }
-
 
   return (
     <div className="page">
@@ -182,11 +170,10 @@ function App() {
               <h2>CARDS FOR {currentBoard.title.toUpperCase()}</h2>
             )}
             {isBoardSelected && (
-              <select>
-                <option value=""></option>
-                <option value="by_id" onChange={getSortedCards("by_id")}>Sort by id</option>
-                <option value="alpha" onChange={getSortedCards("alpha")}>Sort alphabetically</option>
-                <option value="likes" onChange={getSortedCards("likes")}>Sort by likes</option>
+              <select onChange={event => {getData(event.target.value)}}>
+                <option value="by_id">Sort by id</option>
+                <option value="alpha">Sort alphabetically</option>
+                <option value="likes">Sort by likes</option>
               </select>
             )}
             <p>{currentCard.message} </p>
