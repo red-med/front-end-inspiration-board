@@ -19,7 +19,7 @@ function App() {
 
   const API = "https://inspiration-board-backend-5puf.onrender.com/";
 
-  const getData = (param="by_id") => {
+  const getData = (param="") => {
     axios
     .get(`${API}/boards`)
     .then((result) => {
@@ -27,7 +27,7 @@ function App() {
     })
     .then(()  => {
       axios
-      .get(`${API}/boards/${currentBoard.board_id}/cards?sort=${param}`)
+      .get(`${API}/boards/${currentBoard.board_id}/cards${param}`)
       .then((result) => {
         setCards(result["data"]["cards"]);
         console.log("Got Cards"); 
@@ -171,9 +171,9 @@ function App() {
             )}
             {isBoardSelected && (
               <select onChange={event => {getData(event.target.value)}}>
-                <option value="by_id">Sort by id</option>
-                <option value="alpha">Sort alphabetically</option>
-                <option value="likes">Sort by likes</option>
+                <option value="?sort=by_id">Sort by id</option>
+                <option value="?sort=alpha">Sort alphabetically</option>
+                <option value="?sort=likes">Sort by likes</option>
               </select>
             )}
             <p>{currentCard.message} </p>
