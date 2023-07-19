@@ -16,10 +16,11 @@ function App() {
   const [currentCard, setCurrentCard] = useState(null);
   const [cards, setCards] = useState([]);
   const [isBoardSelected, setIsBoardSelected] = useState(false);
+  const [sortValue, setSortValue] = useState("")
 
   const API = "https://inspiration-board-backend-5puf.onrender.com";
 
-  const getData = (param="") => {
+  const getData = (param=sortValue) => {
     axios
     .get(`${API}/boards`)
     .then((result) => {
@@ -100,6 +101,9 @@ function App() {
         }
       }
       setBoards(newBoards);
+      setCurrentBoard(null);
+      setIsBoardSelected(false);
+      setCards([])
     })
     .catch((err) => {
       console.log(err);
@@ -148,6 +152,11 @@ function App() {
     });
   };
 
+  const changeSort = (sort_by) => {
+    setSortValue(sort_by);
+    getData(sort_by);
+  }
+
 
   return (
     <div className="page">
@@ -178,7 +187,7 @@ function App() {
               <h2>CARDS FOR {currentBoard.title.toUpperCase()}</h2>
             )}
             {isBoardSelected && (
-              <select className="drop-down" onChange={event => {getData(event.target.value)}}>
+              <select className="drop-down" onChange={event => {changeSort(event.target.value)}}>
                 <option value="?sort=by_id">Sort by id</option>
                 <option value="?sort=alpha">Sort alphabetically</option>
                 <option value="?sort=likes">Sort by likes</option>
