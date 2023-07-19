@@ -93,7 +93,13 @@ function App() {
     axios
     .delete(`${API}/boards/${id}`)
     .then((result) => {
-      getData();
+      const newBoards = [];
+      for (let board of boards){
+        if (board.board_id !== id) {
+          newBoards.push(board);
+        }
+      }
+      setBoards(newBoards);
     })
     .catch((err) => {
       console.log(err);
@@ -158,7 +164,7 @@ function App() {
             <div>
               <h2>SELECTED BOARD</h2>
               <p>{currentBoard.title} - {currentBoard.owner}</p>
-              <button onClick={() => {deleteBoard(currentBoard.id)}}>Delete board</button>
+              <button onClick={() => {deleteBoard(currentBoard.board_id)}}>Delete board</button>
             </div>
           }
           <div>
