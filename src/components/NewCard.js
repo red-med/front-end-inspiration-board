@@ -3,10 +3,7 @@ import Proptypes from 'prop-types';
 import React from 'react';
 
 const INITIAL_FORM_DATA = {
-    id:0,
-    message: "",
-    likes_count:0,
-    date_created:"01/01/2011"
+    message: ""
 }
 
 const NewCardForm = ({ addCard }) => {
