@@ -33,6 +33,7 @@ const NewCardForm = ({ addCard }) => {
                     <label>Message</label>
                     </div>
                         <input type="text"
+                            className={formData.message ? "valid-form-input":"invalid-form-input"}
                             id="message" 
                             name="message" 
                             value={formData.message}

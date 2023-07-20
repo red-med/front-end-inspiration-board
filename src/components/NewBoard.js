@@ -41,6 +41,7 @@ const NewBoardForm = ({ addBoard }) => {
                     <label>Title</label>
                     </div>
                         <input type="text"
+                            className={formData.title ? "valid-form-input":"invalid-form-input"}
                             id="title" 
                             name="title" 
                             value={formData.title}
@@ -50,6 +51,7 @@ const NewBoardForm = ({ addBoard }) => {
                     <label>Owner's Name</label>
                     </div>
                         <input type="text" 
+                            className={formData.owner ? "valid-form-input":"invalid-form-input"}
                             id="owner" 
                             name="owner" 
                             value={formData.owner}

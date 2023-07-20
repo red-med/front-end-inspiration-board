@@ -7,13 +7,9 @@ import axios from "axios";
 import NewBoardForm from './components/NewBoard';
 import NewCardForm from './components/NewCard';
 
-const BOARDS = [{board_id: 0, title: "", owner: ""}]
-const CARDS = [{id:0, message: "", likes_count: 0, date_created:"01/01/2001"}]
-
 function App() {
   const [boards, setBoards] = useState([]);
   const [currentBoard, setCurrentBoard] = useState(null);
-  const [currentCard, setCurrentCard] = useState(null);
   const [cards, setCards] = useState([]);
   const [isBoardSelected, setIsBoardSelected] = useState(false);
   const [sortValue, setSortValue] = useState("")
@@ -83,6 +79,7 @@ function App() {
     .then((result) => {
       setCards(result["data"]["cards"]);
       console.log("Got Cards"); 
+      setSortValue("")
     })
     .catch((err) => {
       console.log(err);
@@ -139,13 +136,7 @@ function App() {
     axios
     .delete(`${API}/cards/${id}`)
     .then((result) => {
-      const newCards = [];
-      for (let card of cards){
-        if (card.card_id !== id) {
-          newCards.push(card);
-        }
-      }
-      setCards(newCards);
+      getData();
     })
     .catch((err) => {
       console.log(err);
@@ -193,9 +184,6 @@ function App() {
                 <option value="?sort=likes">Sort by likes</option>
               </select>
             )}
-            {currentCard && 
-              <p>{currentCard.message} </p>
-            }
             <CardList className="cardlist" cards={cards} increaseLikes={increaseLikes} deleteCard={deleteCard}/>
           </div>
           <div>

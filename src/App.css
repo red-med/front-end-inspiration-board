@@ -1,6 +1,6 @@
 .content {
   padding: 50px;
-  font-family:sans-serif
+  font-family:"Permanent Marker",sans-serif;
 }
 
 h1, h2 {
@@ -12,7 +12,7 @@ font: 32px;
 }
 
 h1 {
-  background-color: yellow;
+  background-color: pink;
   margin: 21.44px 0px;
   padding: 19.2px 32px;
   transform: rotate(-5deg) skew(-10deg);
@@ -32,6 +32,10 @@ button {
   background-color: white;
 }
 
+button:hover {
+  background-color: pink;
+}
+
 .board-view {
   display: flex;
   justify-content: space-between;
@@ -46,6 +50,7 @@ button {
 }
 
 .board-list {
+  border: 1px solid #000;
   order: 1px solid #000;
   margin-right: 2rem;
   max-height: 9rem;
@@ -92,7 +97,7 @@ button {
 
 .card-item {
   align-items: center;
-  background-color: #fff8a5;
+  background-color: pink;
   box-shadow: -10px 7px 7px #d3d3d3;
   display: flex;
   flex-direction: column;
@@ -125,4 +130,23 @@ button {
   padding: 0.5em;
   margin: 10px 0px 10px 0px;
   box-sizing: initial;
+}
+
+.submit-button:hover {
+  background-color: pink;
+}
+
+.invalid-form-input {
+    border: 1px solid red;
+    box-shadow: 0 0 7px red;
+}
+
+.valid-form-input {
+  border: 1px solid transparent;
+  box-shadow: 0 0 7px transparent;
+}
+
+.drop-down {
+  padding: 10px;
+  border: 2px solid black;
 }

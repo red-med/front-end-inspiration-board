@@ -28,7 +28,6 @@ CardList.propTypes = {
             card_id: PropTypes.number.isRequired,
             message: PropTypes.string.isRequired,
             likes_count: PropTypes.number.isRequired,
-            date_created: PropTypes.string.isRequired,
             board_id: PropTypes.number.isRequired
         })
     ),
